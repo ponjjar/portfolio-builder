@@ -10,6 +10,8 @@ import { formatMonthYear } from '@/utils/dateFormatter';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { smoothLayout, cardEntrance, cardExit } from '@/utils/animations';
 import { ArrowUp, ArrowDown } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface EducationListItemProps {
   education: Education;
@@ -73,7 +75,7 @@ export function EducationListItem({ education, isExpanded, onToggleExpand, onUpd
           <Animated.View entering={FadeIn.duration(200)} className="flex-row items-start p-4">
           <TouchableOpacity onPress={onToggleExpand} className="flex-1 flex-row items-start gap-4 mr-4">
             <View className="w-12 h-12 rounded-lg bg-surface-elevated items-center justify-center border border-border">
-              <GraduationCap size={20} color="var(--text-secondary)" />
+              <GraduationCap size={20} color={useThemeColor('--text-secondary')} />
             </View>
 
             <View className="flex-1 justify-center">
@@ -90,15 +92,15 @@ export function EducationListItem({ education, isExpanded, onToggleExpand, onUpd
             {onMoveUp && onMoveDown && (
               <View className="flex-col justify-center mr-1">
                 <TouchableOpacity onPress={() => onMoveUp(education.id)} disabled={isFirst} className={`p-1 ${isFirst ? 'opacity-30' : 'opacity-70'}`}>
-                  <ArrowUp size={16} color="var(--text-secondary)" />
+                  <ArrowUp size={16} color={useThemeColor('--text-secondary')} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => onMoveDown(education.id)} disabled={isLast} className={`p-1 ${isLast ? 'opacity-30' : 'opacity-70'}`}>
-                  <ArrowDown size={16} color="var(--text-secondary)" />
+                  <ArrowDown size={16} color={useThemeColor('--text-secondary')} />
                 </TouchableOpacity>
               </View>
             )}
             <TouchableOpacity onPress={onToggleExpand} className="p-2 bg-surface-elevated rounded-full self-center">
-              <Edit2 size={16} color="var(--text-secondary)" />
+              <Edit2 size={16} color={useThemeColor('--text-secondary')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleDelete} className="p-2 bg-[#ef444420] rounded-full self-center">
               <Trash2 size={16} color="#ef4444" />
@@ -112,7 +114,7 @@ export function EducationListItem({ education, isExpanded, onToggleExpand, onUpd
         className="flex-row justify-between items-center p-4 bg-surface border-b border-border"
       >
         <Text className="text-text font-bold">{t('experience.tabs.education')}</Text>
-        <ChevronUp size={20} color="var(--text-secondary)" />
+        <ChevronUp size={20} color={useThemeColor('--text-secondary')} />
       </TouchableOpacity>
 
       <View className="p-4 flex-col gap-4">
@@ -203,8 +205,7 @@ export function EducationListItem({ education, isExpanded, onToggleExpand, onUpd
           placeholder=""
           multiline
           numberOfLines={4}
-          maxLength={1000}
-          showCharacterCount
+          maxLength={800}
         />
 
         {/* Row 5: URL */}

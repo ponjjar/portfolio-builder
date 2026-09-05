@@ -3,6 +3,8 @@ import { Eclipse, Flame, Moon, Palette, Sun, Terminal, Waves } from 'lucide-reac
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions, Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 export function ThemeSelector() {
   const { theme, setTheme } = useTheme();
@@ -72,7 +74,7 @@ export function ThemeSelector() {
         className="w-10 h-10 items-center justify-center rounded-full bg-surface border border-border"
         accessibilityLabel={t('theme.change_theme')}
       >
-        <Palette size={18} color="var(--text)" />
+        <Palette size={18} color={useThemeColor('--text')} />
       </TouchableOpacity>
 
       {/* Tooltip */}

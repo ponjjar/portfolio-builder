@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
+import { useThemeColor } from '@/theme/colors';
 
 export interface VisualThemeConfig {
   preset: 'minimal' | 'dark' | 'amoled' | 'lava' | 'cosmic-glow' | 'soft-purple-glow' | 'grid-stars' | 'clean-light' | 'neon-orbit';
@@ -125,7 +126,7 @@ export function VisualThemeModal({ visible, onClose, config, onUpdate }: VisualT
               className="w-10 h-10 rounded-full border-2 items-center justify-center"
               style={{ 
                 backgroundColor: color, 
-                borderColor: config.accent === color ? 'var(--text)' : 'transparent' 
+                borderColor: config.accent === color ? useThemeColor('--text') : 'transparent' 
               }}
             >
               {config.accent === color && <View className="w-3 h-3 rounded-full bg-background/50" />}

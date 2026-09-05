@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next';
 import { Experience, Education } from '@/domain/portfolio/types';
 import { CheckSquare, Square, AlertTriangle } from 'lucide-react-native';
 import { usePortfolioStore } from '@/store';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface ReviewImportModalProps {
   visible: boolean;
@@ -88,7 +90,7 @@ export function ReviewImportModal({ visible, onClose, data, onConfirm }: ReviewI
   const currentEdus = session.education || [];
 
   return (
-    <Modal visible={visible} onClose={onClose} title={t('experience.import.review_title', 'Revisar Dados Importados')} showCloseButton={true}>
+    <Modal visible={visible} onClose={onClose} title={t('experience.import.review_title', 'Revisar Dados Importados')} hideCloseButton={false}>
       <View className="flex-row items-center border border-border rounded-lg p-1 bg-surface-elevated mb-4">
         <TouchableOpacity
           onPress={() => setActiveTab('experience')}
@@ -111,9 +113,9 @@ export function ReviewImportModal({ visible, onClose, data, onConfirm }: ReviewI
       <TouchableOpacity onPress={toggleAll} className="mb-4 flex-row items-center justify-end px-2">
         <Text className="text-primary font-bold mr-2 text-sm">{t('experience.import.select_all', 'Selecionar Todos')}</Text>
         {activeTab === 'experience' ? (
-           selectedExperiences.size === data.experiences.length ? <CheckSquare size={16} color="var(--primary)" /> : <Square size={16} color="var(--primary)" />
+           selectedExperiences.size === data.experiences.length ? <CheckSquare size={16} color={useThemeColor('--primary')} /> : <Square size={16} color={useThemeColor('--primary')} />
         ) : (
-           selectedEducation.size === data.education.length ? <CheckSquare size={16} color="var(--primary)" /> : <Square size={16} color="var(--primary)" />
+           selectedEducation.size === data.education.length ? <CheckSquare size={16} color={useThemeColor('--primary')} /> : <Square size={16} color={useThemeColor('--primary')} />
         )}
       </TouchableOpacity>
 
@@ -125,7 +127,7 @@ export function ReviewImportModal({ visible, onClose, data, onConfirm }: ReviewI
           return (
             <TouchableOpacity key={exp.id} onPress={() => toggleExp(exp.id)} className={`flex-row p-4 border-b border-border items-center ${isSelected ? 'bg-primary/5' : ''}`}>
               <View className="mr-3">
-                {isSelected ? <CheckSquare color="var(--primary)" size={20} /> : <Square color="var(--text-muted)" size={20} />}
+                {isSelected ? <CheckSquare color={useThemeColor('--primary')} size={20} /> : <Square color={useThemeColor('--text-muted')} size={20} />}
               </View>
               <View className="flex-1">
                 <Text className="text-text font-bold" numberOfLines={1}>{exp.company}</Text>
@@ -149,7 +151,7 @@ export function ReviewImportModal({ visible, onClose, data, onConfirm }: ReviewI
           return (
             <TouchableOpacity key={edu.id} onPress={() => toggleEdu(edu.id)} className={`flex-row p-4 border-b border-border items-center ${isSelected ? 'bg-primary/5' : ''}`}>
               <View className="mr-3">
-                {isSelected ? <CheckSquare color="var(--primary)" size={20} /> : <Square color="var(--text-muted)" size={20} />}
+                {isSelected ? <CheckSquare color={useThemeColor('--primary')} size={20} /> : <Square color={useThemeColor('--text-muted')} size={20} />}
               </View>
               <View className="flex-1">
                 <Text className="text-text font-bold" numberOfLines={1}>{edu.institution}</Text>

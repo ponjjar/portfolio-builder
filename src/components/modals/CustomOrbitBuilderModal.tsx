@@ -5,6 +5,8 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { User, Briefcase, FileText, Link as LinkIcon, Code } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 export interface OrbitZones {
   topLeft: string;
@@ -28,12 +30,12 @@ interface CustomOrbitBuilderModalProps {
 
 const getAvailableComponents = (t: any) => [
   { id: '', label: 'Vazio', icon: null },
-  { id: 'name', label: 'Nome', icon: <User size={14} color="var(--text)" /> },
-  { id: 'headline', label: 'Headline', icon: <Briefcase size={14} color="var(--text)" /> },
-  { id: 'links', label: 'Links Principais', icon: <LinkIcon size={14} color="var(--text)" /> },
-  { id: 'description', label: t('custom_orbit.items.description'), icon: <FileText size={14} color="var(--text)" /> },
-  { id: 'technologies', label: t('custom_orbit.items.tech_stack'), icon: <Code size={14} color="var(--text)" /> },
-  { id: 'otherLinks', label: 'Outros Links', icon: <LinkIcon size={14} color="var(--text)" /> },
+  { id: 'name', label: 'Nome', icon: <User size={14} color={useThemeColor('--text')} /> },
+  { id: 'headline', label: 'Headline', icon: <Briefcase size={14} color={useThemeColor('--text')} /> },
+  { id: 'links', label: 'Links Principais', icon: <LinkIcon size={14} color={useThemeColor('--text')} /> },
+  { id: 'description', label: t('custom_orbit.items.description'), icon: <FileText size={14} color={useThemeColor('--text')} /> },
+  { id: 'technologies', label: t('custom_orbit.items.tech_stack'), icon: <Code size={14} color={useThemeColor('--text')} /> },
+  { id: 'otherLinks', label: 'Outros Links', icon: <LinkIcon size={14} color={useThemeColor('--text')} /> },
 ];
 
 
@@ -67,7 +69,7 @@ const ZoneBox = ({
     >
       {isCenter ? (
         <View className="w-10 h-10 rounded-full bg-primary/30 items-center justify-center mb-1">
-          <User size={16} color="var(--primary)" />
+          <User size={16} color={useThemeColor('--primary')} />
         </View>
       ) : null}
       <Text className={`text-xs text-center ${compId || isCenter ? 'font-bold text-text' : 'text-text-muted'}`}>

@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, ScrollView, Switch } from 'react-native';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { Briefcase } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
 
 export interface CareerLayoutConfig {
   layout: 'stacked' | 'side-by-side' | 'tabs';
@@ -84,7 +85,7 @@ export function CareerLayoutModal({ visible, onClose, config, onUpdate }: Career
           <Switch 
             value={config.sharedEntryStyle}
             onValueChange={(val) => onUpdate({ ...config, sharedEntryStyle: val })}
-            trackColor={{ false: 'var(--border)', true: 'var(--primary)' }}
+            trackColor={{ false: useThemeColor('--border'), true: useThemeColor('--primary') }}
             thumbColor={'#fff'}
           />
         </View>

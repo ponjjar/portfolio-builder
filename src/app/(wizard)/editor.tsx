@@ -20,13 +20,15 @@ import { useRouter } from 'expo-router';
 import { ArrowLeft, Briefcase, Download, Eye, Laptop, LayoutTemplate, MonitorSmartphone, Palette, Settings, Smartphone, User } from 'lucide-react-native';
 import { useEffect, useState } from 'react';
 import { Platform, ScrollView, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { PortfolioPreview } from '@/components/ui/PortfolioPreview';
+import { useThemeColor } from '@/theme/colors';
+import { useTheme } from '@/theme/ThemeContext';
 
-// @ts-ignore
-import { WebView } from 'react-native-webview';
 
 export default function EditorScreen() {
   const router = useRouter();
   const { session, updateTheme, updateConfig } = usePortfolioStore();
+  const { theme } = useTheme();
   const { width } = useWindowDimensions();
   const { t } = useTranslation();
 
@@ -129,7 +131,7 @@ export default function EditorScreen() {
           onPress={() => setActiveTab('settings')}
           className={`p-4 items-center border-b-2 ${activeTab === 'settings' ? 'border-primary' : 'border-transparent'}`}
         >
-          <Settings color={activeTab === 'settings' ? 'var(--primary)' : 'var(--text-secondary)'} size={18} />
+          <Settings color={activeTab === 'settings' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={18} />
         </TouchableOpacity>
       </View>
 
@@ -163,7 +165,7 @@ export default function EditorScreen() {
                           if (section.id === 'career') setCareerLayoutModalVisible(true);
                           if (section.id === 'skills') setSkillsLayoutModalVisible(true);
                         }} className="p-2 bg-input-background rounded hover:bg-surface-elevated">
-                          <Settings color="var(--text-secondary)" size={14} />
+                          <Settings color={useThemeColor('--text-secondary')} size={14} />
                         </TouchableOpacity>
                       )}
                       <TouchableOpacity onPress={() => handleEditSection(section.id)} className="p-2">
@@ -213,7 +215,7 @@ export default function EditorScreen() {
                   className="flex-row items-center justify-between bg-surface p-3 rounded border border-border"
                 >
                   <View className="flex-row items-center">
-                    <Palette color="var(--text)" size={16} className="mr-3" />
+                    <Palette color={useThemeColor('--text')} size={16} className="mr-3" />
                     <Text className="text-text font-bold text-sm">{t('editor.visualTheme')}</Text>
                   </View>
                   <Text className="text-text-secondary text-xs">{session.portfolio.visualTheme?.preset || 'dark'} &gt;</Text>
@@ -223,7 +225,7 @@ export default function EditorScreen() {
                   className="flex-row items-center justify-between bg-surface p-3 rounded border border-border"
                 >
                   <View className="flex-row items-center">
-                    <MonitorSmartphone color="var(--text)" size={16} className="mr-3" />
+                    <MonitorSmartphone color={useThemeColor('--text')} size={16} className="mr-3" />
                     <Text className="text-text font-bold text-sm">{t('editor.header')}</Text>
                   </View>
                   <Text className="text-text-secondary text-xs">{session.portfolio.layout.header?.enabled ? t('editor.layouts.active') : t('editor.layouts.hidden')} &gt;</Text>
@@ -252,15 +254,15 @@ export default function EditorScreen() {
       {!isMobile ? (
         <View className="p-6 border-t border-border">
           <Button onPress={() => setIsExportVisible(true)} className="w-full">
-            <Download color="var(--primary-foreground)" size={16} />
+            <Download color={useThemeColor('--primary-foreground')} size={16} />
             {t('editor.exportPortfolio')}
           </Button>
         </View>
       ) : (
         <View className="absolute bottom-6 left-6 right-6">
           <Button onPress={() => setShowMobilePreview(true)} className="w-full shadow-lg h-14">
-            <Eye color="var(--primary-foreground)" size={18} />
-            <Text className="font-bold text-lg var(--primary-foreground)">Visualizar portfólio</Text>
+            <Eye color={useThemeColor('--primary-foreground')} size={18} />
+            <Text style={{ color: useThemeColor('--primary-foreground') }} className="font-bold text-lg">Visualizar portfólio</Text>
           </Button>
         </View>
       )}
@@ -276,11 +278,11 @@ export default function EditorScreen() {
       {isMobile && (
         <View className="h-14 border-b border-border flex-row items-center justify-between px-4 bg-surface">
           <TouchableOpacity onPress={() => setShowMobilePreview(false)} className="flex-row items-center p-2">
-            <ArrowLeft color="var(--text)" size={18} className="mr-2" />
+            <ArrowLeft color={useThemeColor('--text')} size={18} className="mr-2" />
             <Text className="text-text font-bold">Voltar</Text>
           </TouchableOpacity>
           <Button onPress={() => setIsExportVisible(true)} size="sm">
-            <Download color="var(--primary-foreground)" size={14} className="mr-1" />
+            <Download color={useThemeColor('--primary-foreground')} size={14} className="mr-1" />
             Exportar
           </Button>
         </View>
@@ -293,13 +295,13 @@ export default function EditorScreen() {
             onPress={() => setViewport('desktop')}
             className={`p-2 rounded ${viewport === 'desktop' ? 'bg-border' : 'bg-transparent'}`}
           >
-            <Laptop color={viewport === 'desktop' ? 'var(--text)' : 'var(--text-secondary)'} size={18} />
+            <Laptop color={viewport === 'desktop' ? useThemeColor('--text') : useThemeColor('--text-secondary')} size={18} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => setViewport('mobile')}
             className={`p-2 rounded ${viewport === 'mobile' ? 'bg-border' : 'bg-transparent'}`}
           >
-            <Smartphone color={viewport === 'mobile' ? 'var(--text)' : 'var(--text-secondary)'} size={18} />
+            <Smartphone color={viewport === 'mobile' ? useThemeColor('--text') : useThemeColor('--text-secondary')} size={18} />
           </TouchableOpacity>
         </View>
       </View>
@@ -316,27 +318,14 @@ export default function EditorScreen() {
             borderRadius: viewport === 'mobile' ? 32 : (isMobile ? 0 : 8),
             overflow: 'hidden',
             borderWidth: viewport === 'mobile' ? 8 : (isMobile ? 0 : 1),
-            borderColor: 'var(--border)'
+            borderColor: useThemeColor('--border')
           }}
         >
-          {Platform.OS === 'web' ? (
-            <iframe
-              srcDoc={htmlContent}
-              style={{
-                width: viewport === 'desktop' && isMobile ? '1280px' : '100%',
-                height: viewport === 'desktop' && isMobile ? `${(1 / (width / 1280)) * 100}%` : '100%',
-                border: 'none',
-                transform: viewport === 'desktop' && isMobile ? `scale(${width / 1280})` : 'none',
-                transformOrigin: 'top left'
-              }}
-              sandbox="allow-scripts allow-same-origin"
-            />
-          ) : (
-            <WebView
-              source={{ html: htmlContent }}
-              style={{ flex: 1 }}
-            />
-          )}
+          <PortfolioPreview
+            htmlContent={htmlContent}
+            viewport={viewport}
+            isMobile={isMobile}
+          />
         </View>
       </View>
     </View>

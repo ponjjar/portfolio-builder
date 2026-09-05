@@ -10,6 +10,8 @@ import { ImagePickerField } from '@/components/ui/image-picker-field';
 import { Code2, Briefcase, Plus, Trash2 } from 'lucide-react-native';
 import { usePortfolioStore } from '@/store';
 import { useTranslation } from 'react-i18next';
+import { useThemeColor } from '@/theme/colors';
+
 
 export default function ProfileScreen() {
   const { t } = useTranslation();
@@ -125,7 +127,7 @@ export default function ProfileScreen() {
           setSocialLink('github', text);
           if (linkErrors.github) setLinkErrors(e => ({ ...e, github: undefined }));
         }}
-        leadingIcon={<Code2 color="var(--text-secondary)" size={18} />}
+        leadingIcon={<Code2 color={useThemeColor('--text-secondary')} size={18} />}
         error={linkErrors.github}
       />
       
@@ -137,7 +139,7 @@ export default function ProfileScreen() {
           setSocialLink('linkedin', text);
           if (linkErrors.linkedin) setLinkErrors(e => ({ ...e, linkedin: undefined }));
         }}
-        leadingIcon={<Briefcase color="var(--text-secondary)" size={18} />}
+        leadingIcon={<Briefcase color={useThemeColor('--text-secondary')} size={18} />}
         error={linkErrors.linkedin}
       />
     </>
@@ -228,7 +230,7 @@ export default function ProfileScreen() {
                 </Text>
                 {customLinks.length < 5 && (
                   <Pressable onPress={addCustomLink} className="flex-row items-center gap-1.5 bg-surface-elevated px-3 py-1.5 rounded-full border border-border transition-colors hover:bg-border/30">
-                    <Plus size={14} color="var(--text)" />
+                    <Plus size={14} color={useThemeColor('--text')} />
                     <Text className="text-[12px] font-medium text-text">{t('common.add')}</Text>
                   </Pressable>
                 )}

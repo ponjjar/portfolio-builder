@@ -3,6 +3,8 @@ import { Text, Pressable } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useThemeColor } from '@/theme/colors';
+
 
 export function LanguageSelector() {
   const { i18n } = useTranslation();
@@ -20,7 +22,7 @@ export function LanguageSelector() {
       onPress={toggleLanguage}
       className="flex-row items-center bg-input-background rounded-full px-3 py-1.5 border border-border"
     >
-      <Globe color="var(--text-secondary)" size={12} className="mr-2" />
+      <Globe color={useThemeColor('--text-secondary')} size={12} className="mr-2" />
       <Text className="text-text-secondary font-bold text-xs uppercase tracking-wider">
         {label}
       </Text>

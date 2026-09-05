@@ -5,6 +5,8 @@ import { FormField } from '@/components/ui/form-field';
 import { Button } from '@/components/ui/button';
 import { Check, Plus, X } from 'lucide-react-native';
 import { usePortfolioStore } from '@/store';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface AddSkillModalProps {
   visible: boolean;
@@ -144,7 +146,7 @@ export function AddSkillModal({ visible, onClose, onAdd, existingSkills }: AddSk
               <Text numberOfLines={1} className={`whitespace-nowrap ${category === cat ? 'text-primary-foreground font-bold' : 'text-text-secondary'} text-xs mr-1`}>
                 {cat}
               </Text>
-              {category === cat && <Check color="var(--primary-foreground)" size={12} />}
+              {category === cat && <Check color={useThemeColor('--primary-foreground')} size={12} />}
             </TouchableOpacity>
           ))}
 
@@ -154,17 +156,17 @@ export function AddSkillModal({ visible, onClose, onAdd, existingSkills }: AddSk
                 value={newCategoryName}
                 onChangeText={setNewCategoryName}
                 placeholder="Nome..."
-                placeholderTextColor="var(--text-muted)"
+                placeholderTextColor={useThemeColor('--text-muted')}
                 className="text-text text-xs mr-2 py-1 outline-none"
                 autoFocus
                 onSubmitEditing={handleConfirmNewCategory}
                 style={{ minWidth: 80 }}
               />
               <TouchableOpacity onPress={handleConfirmNewCategory} className="p-1 bg-primary rounded-full">
-                <Check color="var(--primary-foreground)" size={12} />
+                <Check color={useThemeColor('--primary-foreground')} size={12} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => setIsAddingCategory(false)} className="p-1 ml-1">
-                <X color="var(--text-secondary)" size={12} />
+                <X color={useThemeColor('--text-secondary')} size={12} />
               </TouchableOpacity>
             </View>
           ) : (
@@ -175,7 +177,7 @@ export function AddSkillModal({ visible, onClose, onAdd, existingSkills }: AddSk
               }}
               className="flex-row items-center flex-nowrap px-4 py-2 rounded-full border border-dashed border-border hover:bg-surface-elevated transition-colors"
             >
-              <Plus color="var(--text-secondary)" size={12} className="mr-1.5" />
+              <Plus color={useThemeColor('--text-secondary')} size={12} className="mr-1.5" />
               <Text className="text-text-secondary font-bold text-xs">Nova categoria</Text>
             </TouchableOpacity>
           )}

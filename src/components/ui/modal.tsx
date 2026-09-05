@@ -2,8 +2,11 @@
 import { useTheme } from '@/theme/ThemeContext';
 import { X } from 'lucide-react-native';
 import React from 'react';
-import { Platform, Pressable, Modal as RNModal, ScrollView, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import { Platform, Pressable, Modal as RNModal, ScrollView, Text, TouchableOpacity, useWindowDimensions, View, KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { FadeIn, FadeOut, FadeOutLeft, ZoomInRotate } from 'react-native-reanimated';
+import { useThemeColor } from '@/theme/colors';
+
 
 export interface ModalProps {
   visible: boolean;
@@ -111,46 +114,55 @@ export function Modal({
                 shadowRadius: 32,
                 elevation: 20,
                 borderRadius: isSmallScreen ? 0 : 20,
-                backgroundColor: theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(24, 24, 27, 0.8)',
+                backgroundColor: Platform.OS === 'web' 
+                  ? (theme === 'light' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(24, 24, 27, 0.8)')
+                  : (theme === 'light' ? '#F7F7F5' : '#292A2D'),
                 ...(Platform.OS === 'web' ? { backdropFilter: 'blur(6px) saturate(10%)' } : {}) as any,
               }}
             >
-              <View
-                className={`w-full border-border overflow-hidden flex-col theme-${theme}`}
-                style={{
-                  height: isSmallScreen ? '100%' : '100%',
-                  borderWidth: isSmallScreen ? 0 : 1,
-                  borderRadius: isSmallScreen ? 0 : 20
-                }}
-              >
-                {/* Header */}
-                {(title || (!hideCloseButton && onClose)) && (
-                  <View className="flex-row items-center justify-between p-4 border-b border-border" style={{ backgroundColor: 'transparent' }}>
-                    <Text className="text-text font-bold text-lg">{title}</Text>
-                    {!hideCloseButton && onClose && (
-                      <TouchableOpacity onPress={onClose} className="p-2">
-                        <X color="var(--text)" size={20} />
-                      </TouchableOpacity>
+              <SafeAreaView edges={['top', 'bottom']} style={{ flex: 1 }}>
+                <KeyboardAvoidingView 
+                  behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                  style={{ flex: 1, width: '100%' }}
+                >
+                  <View
+                    className={`w-full border-border overflow-hidden flex-col theme-${theme}`}
+                    style={{
+                      height: isSmallScreen ? '100%' : '100%',
+                      borderWidth: isSmallScreen ? 0 : 1,
+                      borderRadius: isSmallScreen ? 0 : 20
+                    }}
+                  >
+                    {/* Header */}
+                    {(title || (!hideCloseButton && onClose)) && (
+                      <View className="flex-row items-center justify-between p-4 border-b border-border" style={{ backgroundColor: 'transparent' }}>
+                        <Text className="text-text font-bold text-lg">{title}</Text>
+                        {!hideCloseButton && onClose && (
+                          <TouchableOpacity onPress={onClose} className="p-2">
+                            <X color={useThemeColor('--text')} size={20} />
+                          </TouchableOpacity>
+                        )}
+                      </View>
+                    )}
+
+                    {/* Body */}
+                    <ScrollView
+                      style={{ flexShrink: 1, width: '100%' }}
+                      contentContainerStyle={{ padding: 16 }}
+                      keyboardShouldPersistTaps="handled"
+                    >
+                      {children}
+                    </ScrollView>
+
+                    {/* Footer */}
+                    {footer && (
+                      <View className="p-4 border-t border-border flex-row justify-end items-center gap-3" style={{ backgroundColor: 'transparent' }}>
+                        {footer}
+                      </View>
                     )}
                   </View>
-                )}
-
-                {/* Body */}
-                <ScrollView
-                  style={{ flexShrink: 1, width: '100%' }}
-                  contentContainerStyle={{ padding: 16 }}
-                  keyboardShouldPersistTaps="handled"
-                >
-                  {children}
-                </ScrollView>
-
-                {/* Footer */}
-                {footer && (
-                  <View className="p-4 border-t border-border flex-row justify-end items-center gap-3" style={{ backgroundColor: 'transparent' }}>
-                    {footer}
-                  </View>
-                )}
-              </View>
+                </KeyboardAvoidingView>
+              </SafeAreaView>
             </Animated.View>
           </Animated.View>
         )}
@@ -200,41 +212,48 @@ export function Modal({
               height: isSmallScreen ? '100%' : '85%',
             }}
           >
-            <View
-              className={`w-full h-full bg-surface border-border overflow-hidden flex-col theme-${theme}`}
-              style={{
-                borderWidth: isSmallScreen ? 0 : 1,
-                borderRadius: isSmallScreen ? 0 : 12
-              }}
-            >
-              {/* Header */}
-              {(title || (!hideCloseButton && onClose)) && (
-                <View className="flex-row items-center justify-between p-4 border-b border-border bg-surface-elevated">
-                  <Text className="text-text font-bold text-lg">{title}</Text>
-                  {!hideCloseButton && onClose && (
-                    <TouchableOpacity onPress={onClose} className="p-2">
-                      <X color="var(--text)" size={20} />
-                    </TouchableOpacity>
+            <SafeAreaView edges={['top', 'bottom']} style={{ flex: 1 }}>
+              <KeyboardAvoidingView 
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                style={{ flex: 1, width: '100%' }}
+              >
+                <View
+                  className={`w-full h-full bg-surface border-border overflow-hidden flex-col theme-${theme}`}
+                  style={{
+                    borderWidth: isSmallScreen ? 0 : 1,
+                    borderRadius: isSmallScreen ? 0 : 12
+                  }}
+                >
+                  {/* Header */}
+                  {(title || (!hideCloseButton && onClose)) && (
+                    <View className="flex-row items-center justify-between p-4 border-b border-border bg-surface-elevated">
+                      <Text className="text-text font-bold text-lg">{title}</Text>
+                      {!hideCloseButton && onClose && (
+                        <TouchableOpacity onPress={onClose} className="p-2">
+                          <X color={useThemeColor('--text')} size={20} />
+                        </TouchableOpacity>
+                      )}
+                    </View>
+                  )}
+
+                  {/* Body */}
+                  <ScrollView
+                    style={{ flex: 1, width: '100%' }}
+                    contentContainerStyle={{ padding: 16 }}
+                    keyboardShouldPersistTaps="handled"
+                  >
+                    {children}
+                  </ScrollView>
+
+                  {/* Footer */}
+                  {footer && (
+                    <View className="p-4 border-t border-border bg-surface-elevated flex-row justify-end items-center gap-3">
+                      {footer}
+                    </View>
                   )}
                 </View>
-              )}
-
-              {/* Body */}
-              <ScrollView
-                style={{ flex: 1, width: '100%' }}
-                contentContainerStyle={{ padding: 16 }}
-                keyboardShouldPersistTaps="handled"
-              >
-                {children}
-              </ScrollView>
-
-              {/* Footer */}
-              {footer && (
-                <View className="p-4 border-t border-border bg-surface-elevated flex-row justify-end items-center gap-3">
-                  {footer}
-                </View>
-              )}
-            </View>
+              </KeyboardAvoidingView>
+            </SafeAreaView>
           </Animated.View>
         </Animated.View>
       </RNModal>

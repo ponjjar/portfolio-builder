@@ -20,6 +20,8 @@ import { AiLanguageSelector } from "@/components/ai/AiLanguageSelector";
 import { Sparkles, Globe } from "lucide-react-native";
 import { useState, useMemo } from "react";
 import { usePortfolioStore } from "@/store";
+import { useThemeColor } from '@/theme/colors';
+
 
 export default function AiScreen() {
   const { t } = useTranslation();
@@ -175,7 +177,7 @@ export default function AiScreen() {
                       onPress={() => setActiveTabLocale(loc)}
                       className={`px-4 py-3 border-b-2 flex-row items-center gap-2 ${isActive ? 'border-primary' : 'border-transparent'}`}
                     >
-                      <Globe size={16} color={isActive ? "var(--primary)" : "var(--text-secondary)"} />
+                      <Globe size={16} color={isActive ? useThemeColor('--primary') : useThemeColor('--text-secondary')} />
                       <Text className={`font-bold uppercase ${isActive ? 'text-primary' : 'text-text-secondary'}`}>
                         {loc}
                       </Text>
@@ -224,7 +226,7 @@ export default function AiScreen() {
                       onPress={() => setActiveTabLocale(loc)}
                       className={`px-4 py-3 border-b-2 flex-row items-center gap-2 ${isActive ? 'border-primary' : 'border-transparent'}`}
                     >
-                      <Globe size={16} color={isActive ? "var(--primary)" : "var(--text-secondary)"} />
+                      <Globe size={16} color={isActive ? useThemeColor('--primary') : useThemeColor('--text-secondary')} />
                       <Text className={`font-bold uppercase ${isActive ? 'text-primary' : 'text-text-secondary'}`}>
                         {loc}
                       </Text>
@@ -246,7 +248,7 @@ export default function AiScreen() {
 
         {step === "complete" && (
           <View className="bg-primary/10 border border-primary/20 p-6 rounded-xl flex-col items-center justify-center py-12">
-            <Sparkles color="var(--primary)" size={48} className="mb-4" />
+            <Sparkles color={useThemeColor('--primary')} size={48} className="mb-4" />
             <Text className="text-2xl font-bold text-text text-center mb-2">
               {t("ai.success_title", "Tudo pronto!")}
             </Text>

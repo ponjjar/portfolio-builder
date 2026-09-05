@@ -10,6 +10,8 @@ import { AiClient } from '@/features/ai/ai-client';
 import { usePortfolioStore } from '@/store';
 import { useTurnstile } from '@/components/ui/TurnstileProvider';
 import * as FileSystem from 'expo-file-system/legacy';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface ImportDataModalProps {
   visible: boolean;
@@ -133,13 +135,7 @@ export function ImportDataModal({ visible, onClose, onSuccess }: ImportDataModal
         // Native
         if (file.mimeType === 'application/zip' || file.name.endsWith('.zip')) {
           const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: FileSystem.EncodingType.Base64 });
-          // Convert base64 to ArrayBuffer for JSZip
-          const binaryString = atob(base64);
-          const bytes = new Uint8Array(binaryString.length);
-          for (let i = 0; i < binaryString.length; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-          }
-          fileContent = bytes.buffer;
+          fileContent = base64; // Will pass base64 string directly
         } else {
           fileContent = await FileSystem.readAsStringAsync(file.uri, { encoding: FileSystem.EncodingType.UTF8 });
         }
@@ -157,7 +153,7 @@ export function ImportDataModal({ visible, onClose, onSuccess }: ImportDataModal
   };
 
   return (
-    <Modal visible={visible} onClose={onClose} title={t('experience.import.title', 'Import Data')} showCloseButton={!loading}>
+    <Modal visible={visible} onClose={onClose} title={t('experience.import.title', 'Import Data')} hideCloseButton={loading}>
       <View className="flex-col gap-4">
         {error && (
           <View className="bg-[#ef444420] border border-[#ef444440] p-4 rounded-lg flex-row items-center">
@@ -168,7 +164,7 @@ export function ImportDataModal({ visible, onClose, onSuccess }: ImportDataModal
 
         {loading ? (
           <View className="items-center justify-center p-8">
-            <ActivityIndicator size="large" color="var(--primary)" />
+            <ActivityIndicator size="large" color={useThemeColor('--primary')} />
             <Text className="text-text-secondary mt-4">Processando arquivo...</Text>
           </View>
         ) : (
@@ -178,13 +174,13 @@ export function ImportDataModal({ visible, onClose, onSuccess }: ImportDataModal
               className="border border-border rounded-xl p-4 flex-row items-center bg-surface hover:bg-surface-elevated transition-colors"
             >
               <View className="w-12 h-12 bg-primary/10 rounded-full items-center justify-center mr-4 border border-primary/20">
-                <FileText color="var(--primary)" size={24} />
+                <FileText color={useThemeColor('--primary')} size={24} />
               </View>
               <View className="flex-1">
                 <Text className="text-text font-bold text-lg">{t('experience.import.resume', 'Import Resume / CV')}</Text>
                 <Text className="text-text-secondary text-sm">PDF (Max 3MB). Requer uso de IA.</Text>
               </View>
-              <Upload color="var(--text-secondary)" size={20} />
+              <Upload color={useThemeColor('--text-secondary')} size={20} />
             </TouchableOpacity>
 
             <TouchableOpacity 
@@ -198,7 +194,7 @@ export function ImportDataModal({ visible, onClose, onSuccess }: ImportDataModal
                 <Text className="text-text font-bold text-lg">{t('experience.import.linkedin', 'Import LinkedIn data')}</Text>
                 <Text className="text-text-secondary text-sm">Arquivo .zip ou .csv exportado do LinkedIn.</Text>
               </View>
-              <Upload color="var(--text-secondary)" size={20} />
+              <Upload color={useThemeColor('--text-secondary')} size={20} />
             </TouchableOpacity>
           </>
         )}

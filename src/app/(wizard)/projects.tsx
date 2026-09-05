@@ -22,6 +22,8 @@ import { Code2, Folder, Plus } from "lucide-react-native";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Text, View } from "react-native";
+import { useThemeColor } from '@/theme/colors';
+
 
 export default function ProjectsScreen() {
   const { t } = useTranslation();
@@ -116,9 +118,9 @@ export default function ProjectsScreen() {
         bottomNav={<BottomNav onNext={handleNext} onBack={handleBack} nextLabel={returnTo === "editor" ? "Salvar e Voltar" : "Continuar"} />}
       >
         <View className="flex-row justify-between items-center mb-8">
-          <Text className="text-text text-xl font-bold">
-            Adicione seus projetos <Text className="text-text-secondary font-normal text-base">[{projects.length} projetos]</Text>
-          </Text>
+          <View className="bg-surface-elevated border border-border px-3 py-1 rounded-full">
+            <Text className="text-text-secondary text-sm font-medium">{projects.length} {projects.length === 1 ? 'projeto' : 'projetos'}</Text>
+          </View>
 
           <View className="flex-row gap-4">
             <Button
@@ -127,7 +129,7 @@ export default function ProjectsScreen() {
             >
               <View className="flex-row items-center">
                 <Code2
-                  color="var(--primary-foreground)"
+                  color={useThemeColor('--primary-foreground')}
                   size={18}
                   className="mr-2"
                 />
@@ -139,7 +141,7 @@ export default function ProjectsScreen() {
 
             <Button variant="outline" onPress={handleAddManual}>
               <View className="flex-row items-center">
-                <Plus color="var(--text)" size={18} className="mr-2" />
+                <Plus color={useThemeColor('--text')} size={18} className="mr-2" />
                 <Text className="text-text font-bold">
                   {t("projects.add_project")}
                 </Text>
@@ -153,7 +155,7 @@ export default function ProjectsScreen() {
         {projects.length === 0 ? (
           <View className="border border-border border-dashed rounded-lg p-10 items-center justify-center bg-surface-elevated">
             <Folder
-              color="var(--text-secondary)"
+              color={useThemeColor('--text-secondary')}
               size={48}
               className="mb-4"
             />
