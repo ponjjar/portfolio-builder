@@ -1,3 +1,4 @@
+import { handleCors } from '../utils/cors';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyTurnstileToken } from '../utils/turnstile';
 
@@ -46,6 +47,8 @@ function cleanAiOutput(text: any): string {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (handleCors(req, res)) return;
+
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');

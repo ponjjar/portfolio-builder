@@ -1,3 +1,4 @@
+import { handleCors } from './utils/cors';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const ALLOWED_ENDPOINTS = [
@@ -12,6 +13,8 @@ const ALLOWED_ENDPOINTS = [
 import { verifyTurnstileToken } from './utils/turnstile';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (handleCors(req, res)) return;
+
   // Only allow GET requests
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });

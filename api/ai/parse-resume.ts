@@ -1,3 +1,4 @@
+import { handleCors } from '../utils/cors';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyTurnstileToken } from '../utils/turnstile';
 
@@ -57,6 +58,8 @@ const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
 // we will implement the managed logic here.
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (handleCors(req, res)) return;
+
   // CORS setup
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');
