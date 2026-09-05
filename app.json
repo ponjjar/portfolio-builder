@@ -1,16 +1,17 @@
 {
   "expo": {
-    "name": "Portfolio-Builder",
-    "slug": "Portfolio-Builder",
+    "name": "Portfolium",
+    "slug": "portfolium",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "portfoliobuilder",
+    "scheme": "portfolium",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.caiqueponjjar.portfolium",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",

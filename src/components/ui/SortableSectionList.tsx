@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { User, Briefcase, Code, ArrowUp, ArrowDown, Eye, EyeOff } from 'lucide-react-native';
 import { PortfolioSection } from '@/domain/portfolio/types';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface SortableSectionListProps {
   sections: PortfolioSection[];
@@ -60,23 +62,23 @@ export function SortableSectionList({ sections, onReorder, onToggleVisibility }:
                 disabled={index === 0}
                 className="p-1 opacity-70 hover:opacity-100 disabled:opacity-30"
               >
-                <ArrowUp color="var(--text-muted)" size={14} />
+                <ArrowUp color={useThemeColor('--text-muted')} size={14} />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => moveItem(index, 'down')}
                 disabled={index === items.length - 1}
                 className="p-1 opacity-70 hover:opacity-100 disabled:opacity-30"
               >
-                <ArrowDown color="var(--text-muted)" size={14} />
+                <ArrowDown color={useThemeColor('--text-muted')} size={14} />
               </TouchableOpacity>
             </View>
-            <Icon color="var(--text)" size={16} className="mr-3" />
+            <Icon color={useThemeColor('--text')} size={16} className="mr-3" />
             <Text className={`text-text flex-1 ${!section.visible ? 'opacity-50' : ''}`}>{t(`sections.${meta.label}`)}</Text>
             <TouchableOpacity onPress={() => onToggleVisibility(section.id)} className="p-2 bg-input-background hover:bg-surface-elevated rounded">
               {section.visible ? (
-                <Eye color="var(--text-secondary)" size={14} />
+                <Eye color={useThemeColor('--text-secondary')} size={14} />
               ) : (
-                <EyeOff color="var(--text-muted)" size={14} />
+                <EyeOff color={useThemeColor('--text-muted')} size={14} />
               )}
             </TouchableOpacity>
           </View>

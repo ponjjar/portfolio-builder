@@ -20,6 +20,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { User, Briefcase, Code, GripVertical, Edit2 } from 'lucide-react-native';
 import { PortfolioSection } from '@/domain/portfolio/types';
 import { TouchableOpacity } from 'react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface SortableSectionListProps {
   sections: PortfolioSection[];
@@ -64,12 +66,12 @@ function SortableItem({ id, section, onEdit }: { id: string; section: PortfolioS
         }`}
       >
         <div ref={setNodeRef} {...attributes} {...listeners} style={{ cursor: 'grab', display: 'flex', alignItems: 'center' }}>
-          <GripVertical color="var(--text-muted)" size={16} className="mr-3" />
+          <GripVertical color={useThemeColor('--text-muted')} size={16} className="mr-3" />
         </div>
-        <Icon color="var(--text)" size={16} className="mr-3" />
+        <Icon color={useThemeColor('--text')} size={16} className="mr-3" />
         <Text className="text-text flex-1">{meta.label}</Text>
         <TouchableOpacity onPress={onEdit} className="p-2 hover:bg-surface-elevated rounded">
-          <Edit2 color="var(--text-secondary)" size={14} />
+          <Edit2 color={useThemeColor('--text-secondary')} size={14} />
         </TouchableOpacity>
       </View>
     </div>
