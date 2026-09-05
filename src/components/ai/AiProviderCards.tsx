@@ -7,6 +7,8 @@ import { AiMode } from '@/features/ai/types';
 import { usePortfolioStore } from '@/store';
 import { getManagedAiUsage } from '@/store';
 import { Alert } from 'react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface AiProviderCardsProps {
   onSelectMode: (mode: AiMode) => void;
@@ -45,7 +47,7 @@ export function AiProviderCards({ onSelectMode, onOpenExternalModal, onSkip }: A
         </View>
         
         <View className="flex-row items-center mb-4 mt-2">
-          <Brain color="var(--text)" size={24} className="mr-3" />
+          <Brain color={useThemeColor('--text')} size={24} className="mr-3" />
           <Text className="text-text text-xl font-bold">{t('ai.use_my_ai')}</Text>
         </View>
         
@@ -69,7 +71,7 @@ export function AiProviderCards({ onSelectMode, onOpenExternalModal, onSkip }: A
       {/* Option 2 */}
       <View className="flex-1 border border-border rounded-xl p-6 bg-transparent">
         <View className="flex-row items-center mb-4">
-          <Sparkles color="var(--text)" size={24} className="mr-3" />
+          <Sparkles color={useThemeColor('--text')} size={24} className="mr-3" />
           <Text className="text-text text-xl font-bold">{t('ai.free_ai')}</Text>
         </View>
         
@@ -105,7 +107,7 @@ export function AiProviderCards({ onSelectMode, onOpenExternalModal, onSkip }: A
       {/* Option 3 */}
       <View className="flex-1 border border-border rounded-xl p-6 bg-transparent">
         <View className="flex-row items-center mb-4">
-          <FastForward color="var(--text)" size={24} className="mr-3" />
+          <FastForward color={useThemeColor('--text')} size={24} className="mr-3" />
           <Text className="text-text text-xl font-bold">{t('ai.no_ai')}</Text>
         </View>
         

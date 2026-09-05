@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Project } from '@/domain/portfolio/types';
 import { usePortfolioStore } from '@/store';
 import { Check, X, Bot, Trash2 } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface AiProjectReviewCardProps {
   project: Project;
@@ -46,7 +48,7 @@ export function AiProjectReviewCard({ project, locale }: AiProjectReviewCardProp
         <View className="flex-row items-center gap-2 flex-1">
           <Text className="text-lg font-bold text-text" numberOfLines={1}>{project.title}</Text>
           <View className="bg-background border border-border px-2 py-1 rounded flex-row items-center ml-2">
-            <Bot color="var(--text-secondary)" size={12} className="mr-1" />
+            <Bot color={useThemeColor('--text-secondary')} size={12} className="mr-1" />
             <Text className="text-[10px] font-bold text-text-secondary uppercase">
               {aiReview.usedProvider}
             </Text>
@@ -54,7 +56,7 @@ export function AiProjectReviewCard({ project, locale }: AiProjectReviewCardProp
         </View>
         
         <TouchableOpacity onPress={handleDelete} className="p-2">
-          <Trash2 size={16} color="var(--text-muted)" />
+          <Trash2 size={16} color={useThemeColor('--text-muted')} />
         </TouchableOpacity>
       </View>
 
