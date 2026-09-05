@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { Modal } from '@/components/ui/modal';
 import { Button } from '@/components/ui/button';
 import { ArrowUp, ArrowDown } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 export type OrbitItem = 'name' | 'links' | 'headline';
 
@@ -69,14 +71,14 @@ export function ProfileCenterOrbitModal({ visible, onClose, order, onUpdateOrder
                   disabled={index === 0}
                   className={`p-1 ${index === 0 ? 'opacity-30' : 'opacity-70 hover:opacity-100'}`}
                 >
-                  <ArrowUp color="var(--text)" size={16} />
+                  <ArrowUp color={useThemeColor('--text')} size={16} />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => moveItem(index, 'down')}
                   disabled={index === currentOrder.length - 1}
                   className={`p-1 ${index === currentOrder.length - 1 ? 'opacity-30' : 'opacity-70 hover:opacity-100'}`}
                 >
-                  <ArrowDown color="var(--text)" size={16} />
+                  <ArrowDown color={useThemeColor('--text')} size={16} />
                 </TouchableOpacity>
               </View>
               <View className="flex-1">

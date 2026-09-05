@@ -8,6 +8,8 @@ import { detectTechnologies } from '@/services/github/github-manifests';
 import { runWithConcurrency } from '@/utils/promise-concurrency';
 import { Modal } from '@/components/ui/modal';
 import { useTurnstile } from '@/components/ui/TurnstileProvider';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface GitHubProcessingModalProps {
   visible: boolean;
@@ -141,10 +143,10 @@ export function GitHubProcessingModal({ visible, reposToProcess, onComplete, onC
               <View className="flex-row items-center flex-1 mr-2">
                 <Text className="text-text font-bold" numberOfLines={1}>{repo.name}</Text>
               </View>
-              {status === 'processing' && <ActivityIndicator size="small" color="var(--text)" />}
-              {status === 'completed' && <CheckCircle2 color="var(--color-success)" size={20} />}
-              {status === 'error' && <XCircle color="var(--color-error)" size={20} />}
-              {status === 'waiting' && <CircleDashed color="var(--text-secondary)" size={20} />}
+              {status === 'processing' && <ActivityIndicator size="small" color={useThemeColor('--text')} />}
+              {status === 'completed' && <CheckCircle2 color={useThemeColor('--color-success')} size={20} />}
+              {status === 'error' && <XCircle color={useThemeColor('--color-error')} size={20} />}
+              {status === 'waiting' && <CircleDashed color={useThemeColor('--text-secondary')} size={20} />}
             </View>
           ))}
         </View>

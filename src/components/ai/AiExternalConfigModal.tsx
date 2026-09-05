@@ -3,6 +3,8 @@ import { View, Text, TextInput, TouchableOpacity, ScrollView, Alert, Modal } fro
 import { Button } from '@/components/ui/button';
 import { X, Eye, EyeOff, Server, Terminal, Box } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
+import { useThemeColor } from '@/theme/colors';
+
 
 export type ExternalAiProvider = 'openai' | 'gemini' | 'ollama' | 'custom';
 
@@ -91,7 +93,7 @@ export function AiExternalConfigModal({ visible, onClose, onContinue }: AiExtern
           <View className="flex-row justify-between items-center mb-4">
             <Text className="text-xl font-bold text-text">{t('ai.external_config_title', 'Configurar IA Externa')}</Text>
             <TouchableOpacity onPress={onClose} className="p-2">
-              <X color="var(--text-secondary)" size={20} />
+              <X color={useThemeColor('--text-secondary')} size={20} />
             </TouchableOpacity>
           </View>
 
@@ -137,7 +139,7 @@ export function AiExternalConfigModal({ visible, onClose, onContinue }: AiExtern
                 onChangeText={setEndpoint}
                 className="bg-background border border-border rounded-lg p-3 text-text"
                 placeholder="https://..."
-                placeholderTextColor="var(--text-muted)"
+                placeholderTextColor={useThemeColor('--text-muted')}
               />
             </View>
 
@@ -148,7 +150,7 @@ export function AiExternalConfigModal({ visible, onClose, onContinue }: AiExtern
                 onChangeText={setModel}
                 className="bg-background border border-border rounded-lg p-3 text-text"
                 placeholder="gpt-4o-mini"
-                placeholderTextColor="var(--text-muted)"
+                placeholderTextColor={useThemeColor('--text-muted')}
               />
             </View>
 
@@ -162,10 +164,10 @@ export function AiExternalConfigModal({ visible, onClose, onContinue }: AiExtern
                     secureTextEntry={!showKey}
                     className="flex-1 p-3 text-text"
                     placeholder="sk-..."
-                    placeholderTextColor="var(--text-muted)"
+                    placeholderTextColor={useThemeColor('--text-muted')}
                   />
                   <TouchableOpacity onPress={() => setShowKey(!showKey)}>
-                    {showKey ? <EyeOff color="var(--text-secondary)" size={20} /> : <Eye color="var(--text-secondary)" size={20} />}
+                    {showKey ? <EyeOff color={useThemeColor('--text-secondary')} size={20} /> : <Eye color={useThemeColor('--text-secondary')} size={20} />}
                   </TouchableOpacity>
                 </View>
                 <Text className="text-xs text-warning mt-2">

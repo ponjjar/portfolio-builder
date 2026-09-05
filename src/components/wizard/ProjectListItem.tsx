@@ -6,6 +6,8 @@ import { FormField } from '@/components/ui/form-field';
 import { ImagePickerField } from '@/components/ui/image-picker-field';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface ProjectListItemProps {
   project: Project;
@@ -52,7 +54,7 @@ export function ProjectListItem({ project, isExpanded, onToggleExpand, onUpdate,
           <View className="flex-1 justify-center">
             <View className="flex-row items-center gap-2 mb-1">
               <Text className="text-text font-bold text-lg" numberOfLines={1}>{project.title || 'Projeto sem nome'}</Text>
-              {project.source.type === 'github' ? <Code2 size={14} color="var(--text-secondary)" /> : null}
+              {project.source.type === 'github' ? <Code2 size={14} color={useThemeColor('--text-secondary')} /> : null}
             </View>
             
             <Text className="text-text-secondary text-sm mb-2" numberOfLines={2}>
@@ -68,7 +70,7 @@ export function ProjectListItem({ project, isExpanded, onToggleExpand, onUpdate,
 
               {hasAi && (
                 <View className="flex-row items-center gap-1 bg-primary/10 border border-primary/20 px-2 py-1 rounded">
-                  <Bot size={12} color="var(--primary)" />
+                  <Bot size={12} color={useThemeColor('--primary')} />
                   <Text className="text-primary text-xs">IA: {aiLocales.length} idioma(s)</Text>
                 </View>
               )}
@@ -86,7 +88,7 @@ export function ProjectListItem({ project, isExpanded, onToggleExpand, onUpdate,
 
           <View className="flex-row gap-2">
             <TouchableOpacity onPress={onToggleExpand} className="p-2 bg-surface-elevated rounded-full">
-              <Edit2 size={16} color="var(--text-secondary)" />
+              <Edit2 size={16} color={useThemeColor('--text-secondary')} />
             </TouchableOpacity>
             <TouchableOpacity onPress={handleDelete} className="p-2 bg-[#ef444420] rounded-full">
               <Trash2 size={16} color="#ef4444" />
@@ -198,15 +200,15 @@ export function ProjectListItem({ project, isExpanded, onToggleExpand, onUpdate,
         </View>
       </View>
 
-      <View className="flex-row justify-between items-center mt-8 pt-4 border-t border-border">
-        <View className="flex-row items-center gap-2">
-          <CheckCircle2 size={16} color="var(--text-secondary)" />
-          <Text className="text-text-secondary">Alterações salvas automaticamente</Text>
+      <View className="flex-row flex-wrap justify-between items-center mt-8 pt-4 border-t border-border gap-4">
+        <View className="flex-row items-center gap-2 flex-shrink flex-1 min-w-[200px]">
+          <CheckCircle2 size={16} color={useThemeColor('--text-secondary')} />
+          <Text className="text-text-secondary flex-shrink">Alterações salvas automaticamente</Text>
         </View>
         <Button variant="outline" onPress={onToggleExpand}>
           <View className="flex-row items-center gap-2">
             <Text className="text-text">Recolher</Text>
-            <ChevronUp size={16} color="var(--text)" />
+            <ChevronUp size={16} color={useThemeColor('--text')} />
           </View>
         </Button>
       </View>

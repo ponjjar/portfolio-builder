@@ -9,6 +9,8 @@ import { useTranslation } from 'react-i18next';
 import { usePortfolioStore } from '@/store';
 import { AddSkillModal } from '@/components/modals/AddSkillModal';
 import { isSkillsComplete } from '@/domain/portfolio/validation';
+import { useThemeColor } from '@/theme/colors';
+
 
 const Badge = ({ label, selected = true, onPress }: { label: string, selected?: boolean, onPress?: () => void }) => (
   <TouchableOpacity 
@@ -16,7 +18,7 @@ const Badge = ({ label, selected = true, onPress }: { label: string, selected?: 
     className={`flex-row items-center flex-nowrap rounded-full px-4 py-2 border ${selected ? 'bg-primary border-primary' : 'bg-transparent border-border'}`}
   >
     <Text numberOfLines={1} className={`whitespace-nowrap ${selected ? 'text-primary-foreground' : 'text-text-secondary'} font-bold mr-2`}>{label}</Text>
-    {selected && <Check color="var(--primary-foreground)" size={14} />}
+    {selected && <Check color={useThemeColor('--primary-foreground')} size={14} />}
   </TouchableOpacity>
 );
 
@@ -93,7 +95,7 @@ export default function SkillsScreen() {
           </View>
           
           <View className="bg-surface border border-border p-4 rounded mb-8 flex-row items-center">
-            <Info color="var(--text-secondary)" size={18} className="mr-3" />
+            <Info color={useThemeColor('--text-secondary')} size={18} className="mr-3" />
             <Text className="text-text-secondary text-sm flex-1">
               {t('skills.info_message')}
             </Text>
@@ -129,7 +131,7 @@ export default function SkillsScreen() {
               onPress={() => setIsAddModalVisible(true)}
               className="flex-row items-center rounded-full px-6 py-3 border border-border border-dashed bg-input-background"
             >
-              <Plus color="var(--text-secondary)" size={16} className="mr-2" />
+              <Plus color={useThemeColor('--text-secondary')} size={16} className="mr-2" />
               <Text className="text-text-secondary font-bold text-sm">{t('skills.add_technology')}</Text>
             </TouchableOpacity>
           </View>

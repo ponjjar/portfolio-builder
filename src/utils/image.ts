@@ -1,5 +1,4 @@
 import * as ImagePicker from 'expo-image-picker';
-import { Platform } from 'react-native';
 
 export type ProcessedImage = {
   uri: string; // The original or temporary URI
@@ -19,13 +18,11 @@ export async function pickAndProcessImage(options: ImageProcessOptions = {}): Pr
     maxFileSizeKb = 500
   } = options;
 
-  // Request permissions if needed
-  if (Platform.OS !== 'web') {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-      alert('Sorry, we need camera roll permissions to make this work!');
-      return null;
-    }
+  // Request permissions
+  const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+  if (status !== 'granted') {
+    alert('Sorry, we need camera roll permissions to make this work!');
+    return null;
   }
 
   // Use ImagePicker which already has compression capabilities
@@ -48,34 +45,10 @@ export async function pickAndProcessImage(options: ImageProcessOptions = {}): Pr
     // Check size limit roughly based on base64 length (approx 4/3 of binary size)
     const sizeInKb = (finalBase64.length * 0.75) / 1024;
     
-    // Auto-resize if it's too large (over 924 KB)
+    // Warn if it's still too large
     if (sizeInKb > 924) {
-      if (Platform.OS === 'web') {
-        try {
-          // Automatic resize via Canvas on Web
-          finalBase64 = await new Promise<string>((resolve) => {
-            const img = new window.Image();
-            img.onload = () => {
-              const canvas = document.createElement('canvas');
-              // Scale down by 0.7 until it's small enough, or just do a fixed scale
-              const scale = Math.sqrt(924 / sizeInKb) * 0.9; // 10% safety margin
-              canvas.width = img.width * scale;
-              canvas.height = img.height * scale;
-              const ctx = canvas.getContext('2d');
-              ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-              // Get new base64 (strip the data:image/jpeg;base64, prefix)
-              const newBase64 = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
-              resolve(newBase64);
-            };
-            img.src = `data:image/jpeg;base64,${finalBase64}`;
-          });
-        } catch (e) {
-          console.error("Failed to auto-resize image on web:", e);
-        }
-      } else {
-        alert(`The selected image is still too large (${Math.round(sizeInKb)}KB) even after compression. Max is 924KB. Please choose a smaller image.`);
-        return null;
-      }
+      alert(`The selected image is still too large (${Math.round(sizeInKb)}KB) even after compression. Max is 924KB. Please choose a smaller image.`);
+      return null;
     }
   }
 

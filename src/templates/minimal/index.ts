@@ -760,13 +760,15 @@ export function renderMinimalTemplate(viewModel: PortfolioViewModel): string {
             el.style.display = 'none';
           }
         });
-        localStorage.setItem('portfolio_lang', lang);
+        try { localStorage.setItem('portfolio_lang', lang); } catch(e) {}
         if (langSelector) langSelector.value = lang;
       }
 
       function getInitialLang() {
-        const saved = localStorage.getItem('portfolio_lang');
-        if (saved && supportedLangs.includes(saved)) return saved;
+        try {
+          const saved = localStorage.getItem('portfolio_lang');
+          if (saved && supportedLangs.includes(saved)) return saved;
+        } catch(e) {}
         
         const browserLang = navigator.language;
         // try exact match (pt-BR)
@@ -788,11 +790,15 @@ export function renderMinimalTemplate(viewModel: PortfolioViewModel): string {
 
       // Scroll state preservation
       document.addEventListener("DOMContentLoaded", () => {
-        const scrollY = sessionStorage.getItem("portfolio_preview_scroll");
-        if (scrollY) window.scrollTo(0, parseInt(scrollY));
+        try {
+          const scrollY = sessionStorage.getItem("portfolio_preview_scroll");
+          if (scrollY) window.scrollTo(0, parseInt(scrollY));
+        } catch(e) {}
       });
       window.addEventListener("scroll", () => {
-        sessionStorage.setItem("portfolio_preview_scroll", window.scrollY);
+        try {
+          sessionStorage.setItem("portfolio_preview_scroll", window.scrollY);
+        } catch(e) {}
       });
 
       // Career Tabs Logic

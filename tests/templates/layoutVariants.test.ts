@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { renderMinimalTemplate } from '@/templates/minimal';
 import { PortfolioViewModel } from '@/templates/viewModel';
 

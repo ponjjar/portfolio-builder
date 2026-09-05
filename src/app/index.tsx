@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Platform, ScrollView, Text, View } from 'react-native';
+import { Platform, ScrollView, Text, View, useWindowDimensions } from 'react-native';
 // @ts-ignore
 // eslint-disable-next-line import/no-unresolved
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,8 @@ import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 import { ArrowDown, ArrowRight, Code2, Database, FileCode2, FileText, Layout, Lock, Upload } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
+import { useThemeColor } from '@/theme/colors';
+
 
 export default function WelcomeScreen() {
   const { t } = useTranslation();
@@ -21,6 +23,7 @@ export default function WelcomeScreen() {
   const { theme } = useTheme();
   const [isDragging, setIsDragging] = useState(false);
   const [importing, setImporting] = useState(false);
+  const { height } = useWindowDimensions();
 
   const isLight = theme === 'light';
 
@@ -112,7 +115,7 @@ export default function WelcomeScreen() {
       {/* Absolute Overlays */}
       {isDragging && (
         <View className="absolute inset-0 z-50 bg-[#000000cc] border-4 border-dashed border-[#ffffff44] items-center justify-center">
-          <Upload size={64} color="var(--text)" className="mb-4" />
+          <Upload size={64} color={useThemeColor('--text')} className="mb-4" />
           <Text className="text-text text-3xl font-bold text-center">{t('welcome.drop_here')}</Text>
         </View>
       )}
@@ -132,7 +135,7 @@ export default function WelcomeScreen() {
         decelerationRate="fast"
       >
         {/* SECTION 1: HERO */}
-        <View className="w-full h-[100dvh] justify-center items-center relative overflow-hidden">
+        <View className="w-full justify-center items-center relative overflow-hidden" style={{ minHeight: height }}>
           <View className="absolute inset-0 z-0 bg-background">
             <TestimonialV2 />
           </View>
@@ -162,7 +165,7 @@ export default function WelcomeScreen() {
             >
               <View className="flex-row items-center justify-center">
                 <Text className="text-primary-foreground font-bold mr-1 md:mr-2 text-sm md:text-base">{t('welcome.start')}</Text>
-                <ArrowRight size={16} color="var(--primary-foreground)" />
+                <ArrowRight size={16} color={useThemeColor('--primary-foreground')} />
               </View>
             </Button>
 
@@ -194,11 +197,11 @@ export default function WelcomeScreen() {
         </View>
 
         {/* SECTION 2: THE HUB (BASE) */}
-        <View className="w-full h-[100dvh] justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-surface">
+        <View className="w-full justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-surface" style={{ minHeight: height }}>
           <View className="max-w-4xl w-full">
             <View className="items-center mb-8 md:mb-16">
               <View className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-primary/10 items-center justify-center mb-4 md:mb-6">
-                <Database size={24} color="var(--primary)" />
+                <Database size={24} color={useThemeColor('--primary')} />
               </View>
               <Text className="text-text text-3xl md:text-6xl font-bold text-center mb-3 md:mb-4">
                 {t('welcome.hub_title')}
@@ -226,7 +229,7 @@ export default function WelcomeScreen() {
         </View>
 
         {/* SECTION 3: RESULTADOS (FIBONACCI) */}
-        <View className="w-full h-[100dvh] justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-background">
+        <View className="w-full justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-background" style={{ minHeight: height }}>
           <View className="max-w-6xl w-full flex-1">
             <View className="mb-6 md:mb-16 mt-4 md:mt-0">
               <Text className="text-text text-3xl md:text-6xl font-bold mb-2 md:mb-4">
@@ -240,20 +243,20 @@ export default function WelcomeScreen() {
             <ScrollView className="flex-1 w-full" showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 24 }}>
               <View className="flex-col md:flex-row gap-4 md:gap-6">
                 <View className="flex-1 bg-surface border border-border rounded-3xl p-6 md:p-8 min-h-[200px] md:min-h-[300px]">
-                  <Layout size={24} color="var(--text)" className="mb-4 md:mb-6" />
+                  <Layout size={24} color={useThemeColor('--text')} className="mb-4 md:mb-6" />
                   <Text className="text-text text-xl md:text-2xl font-bold mb-2 md:mb-3">{t('welcome.result_portfolio')}</Text>
                   <Text className="text-text-secondary leading-relaxed text-sm md:text-base">{t('welcome.result_portfolio_desc')}</Text>
                 </View>
 
                 <View className="flex-1 flex-col gap-4 md:gap-6">
                   <View className="flex-1 bg-surface border border-border rounded-3xl p-6 md:p-8">
-                    <Code2 size={24} color="var(--text)" className="mb-4 md:mb-6" />
+                    <Code2 size={24} color={useThemeColor('--text')} className="mb-4 md:mb-6" />
                     <Text className="text-text text-xl md:text-2xl font-bold mb-2 md:mb-3">{t('welcome.result_readme')}</Text>
                     <Text className="text-text-secondary leading-relaxed text-sm md:text-base">{t('welcome.result_readme_desc')}</Text>
                   </View>
 
                   <View className="flex-1 bg-surface border border-border rounded-3xl p-6 md:p-8">
-                    <FileText size={24} color="var(--text)" className="mb-4 md:mb-6" />
+                    <FileText size={24} color={useThemeColor('--text')} className="mb-4 md:mb-6" />
                     <Text className="text-text text-xl md:text-2xl font-bold mb-2 md:mb-3">{t('welcome.result_cv')}</Text>
                     <Text className="text-text-secondary leading-relaxed text-sm md:text-base">{t('welcome.result_cv_desc')}</Text>
                   </View>
@@ -264,7 +267,7 @@ export default function WelcomeScreen() {
         </View>
 
         {/* SECTION 4: INTEGRAÇÕES */}
-        <View className="w-full h-[100dvh] justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-surface">
+        <View className="w-full justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-surface" style={{ minHeight: height }}>
           <View className="max-w-4xl w-full items-center">
             <View className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-[#10b981]/10 items-center justify-center mb-4 md:mb-6">
               <Code2 size={24} color="#10b981" />
@@ -276,14 +279,14 @@ export default function WelcomeScreen() {
               {t('welcome.integrations_desc')}
             </Text>
             <View className="w-full max-w-2xl h-48 md:h-64 bg-background border border-border rounded-3xl items-center justify-center px-4">
-              <FileCode2 size={40} color="var(--border-strong)" />
+              <FileCode2 size={40} color={useThemeColor('--border-strong')} />
               <Text className="text-text-secondary mt-3 md:mt-4 text-center">{t('welcome.integrations_github')}</Text>
             </View>
           </View>
         </View>
 
         {/* SECTION 5: PRIVACIDADE & FINAL */}
-        <View className="w-full h-[100dvh] justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-background">
+        <View className="w-full justify-center items-center px-4 md:px-6 py-12 md:py-24 bg-background" style={{ minHeight: height }}>
           <View className="max-w-4xl w-full items-center text-center">
             <View className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-blue-500/10 items-center justify-center mb-4 md:mb-6">
               <Lock size={24} color="#3b82f6" />

@@ -3,6 +3,8 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ProjectAiDraft, ProfileAiDraft } from '@/features/ai/types';
 import { CheckCircle2, AlertTriangle, XCircle, CloudLightning } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface AiGenerationProgressProps {
   drafts?: ProjectAiDraft[];
@@ -19,7 +21,7 @@ export function AiGenerationProgress({ drafts = [], profileDraft, isProfileStage
       <View className="flex-1 items-center justify-center p-8">
         {!isError ? (
           <>
-            <ActivityIndicator size="large" color="var(--primary)" className="mb-6" />
+            <ActivityIndicator size="large" color={useThemeColor('--primary')} className="mb-6" />
             <Text className="text-xl font-bold text-text mb-2 text-center">
               {t('ai.generating_profile_title', 'Criando sugestão de perfil')}
             </Text>
@@ -29,7 +31,7 @@ export function AiGenerationProgress({ drafts = [], profileDraft, isProfileStage
           </>
         ) : (
           <>
-            <XCircle color="var(--destructive)" size={48} className="mb-4" />
+            <XCircle color={useThemeColor('--destructive')} size={48} className="mb-4" />
             <Text className="text-xl font-bold text-text mb-2 text-center">
               {t('ai.error_profile_title', 'Erro na geração')}
             </Text>
@@ -52,13 +54,13 @@ export function AiGenerationProgress({ drafts = [], profileDraft, isProfileStage
     <View className="flex-1 flex-col items-center justify-center p-8 bg-surface rounded-xl border border-border">
       
       {completed + error < total ? (
-        <ActivityIndicator size="large" color="var(--primary)" className="mb-6" />
+        <ActivityIndicator size="large" color={useThemeColor('--primary')} className="mb-6" />
       ) : error === total ? (
-        <XCircle color="var(--destructive)" size={48} className="mb-4" />
+        <XCircle color={useThemeColor('--destructive')} size={48} className="mb-4" />
       ) : error > 0 ? (
-        <AlertTriangle color="var(--warning)" size={48} className="mb-4" />
+        <AlertTriangle color={useThemeColor('--warning')} size={48} className="mb-4" />
       ) : (
-        <CheckCircle2 color="var(--success)" size={48} className="mb-4" />
+        <CheckCircle2 color={useThemeColor('--success')} size={48} className="mb-4" />
       )}
       
       <Text className="text-xl font-bold text-text mb-2 text-center">
@@ -85,7 +87,7 @@ export function AiGenerationProgress({ drafts = [], profileDraft, isProfileStage
 
       {hasFallback && (
         <View className="bg-warning/10 border border-warning/30 p-3 rounded-lg flex-row items-center max-w-md mt-4">
-          <CloudLightning color="var(--warning)" size={20} className="mr-3 flex-shrink-0" />
+          <CloudLightning color={useThemeColor('--warning')} size={20} className="mr-3 flex-shrink-0" />
           <Text className="text-warning-foreground text-sm flex-1">
             {t('ai.fallback_alert', 'O serviço principal está temporariamente indisponível. Continuaremos usando o serviço de contingência.')}
           </Text>

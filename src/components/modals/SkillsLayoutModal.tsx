@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { SkillsLayoutSchema } from '@/domain/portfolio/schema';
 import { z } from 'zod';
 import { Code, LayoutList, ListTree, Grid, GripHorizontal, Sidebar, FileText } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
 
 type SkillsLayout = z.infer<typeof SkillsLayoutSchema>;
 
@@ -40,7 +41,7 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
             className={`flex-row items-center p-3 border rounded-xl ${config.displayStyle === 'chips' ? 'border-primary bg-primary/10' : 'border-border bg-surface'}`}
           >
             <View className="w-8 h-8 rounded-full bg-input-background items-center justify-center mr-3">
-              <GripHorizontal color={config.displayStyle === 'chips' ? 'var(--primary)' : 'var(--text-secondary)'} size={16} />
+              <GripHorizontal color={config.displayStyle === 'chips' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={16} />
             </View>
             <View>
               <Text className={`font-bold text-sm ${config.displayStyle === 'chips' ? 'text-primary' : 'text-text'}`}>
@@ -55,7 +56,7 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
             className={`flex-row items-center p-3 border rounded-xl ${config.displayStyle === 'icons' ? 'border-primary bg-primary/10' : 'border-border bg-surface'}`}
           >
             <View className="w-8 h-8 rounded-full bg-input-background items-center justify-center mr-3">
-              <ListTree color={config.displayStyle === 'icons' ? 'var(--primary)' : 'var(--text-secondary)'} size={16} />
+              <ListTree color={config.displayStyle === 'icons' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={16} />
             </View>
             <View>
               <Text className={`font-bold text-sm ${config.displayStyle === 'icons' ? 'text-primary' : 'text-text'}`}>
@@ -70,7 +71,7 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
             className={`flex-row items-center p-3 border rounded-xl ${config.displayStyle === 'icon-grid' ? 'border-primary bg-primary/10' : 'border-border bg-surface'}`}
           >
             <View className="w-8 h-8 rounded-full bg-input-background items-center justify-center mr-3">
-              <Grid color={config.displayStyle === 'icon-grid' ? 'var(--primary)' : 'var(--text-secondary)'} size={16} />
+              <Grid color={config.displayStyle === 'icon-grid' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={16} />
             </View>
             <View>
               <Text className={`font-bold text-sm ${config.displayStyle === 'icon-grid' ? 'text-primary' : 'text-text'}`}>
@@ -85,7 +86,7 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
             className={`flex-row items-center p-3 border rounded-xl ${config.displayStyle === 'grouped' ? 'border-primary bg-primary/10' : 'border-border bg-surface'}`}
           >
             <View className="w-8 h-8 rounded-full bg-input-background items-center justify-center mr-3">
-              <LayoutList color={config.displayStyle === 'grouped' ? 'var(--primary)' : 'var(--text-secondary)'} size={16} />
+              <LayoutList color={config.displayStyle === 'grouped' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={16} />
             </View>
             <View>
               <Text className={`font-bold text-sm ${config.displayStyle === 'grouped' ? 'text-primary' : 'text-text'}`}>
@@ -104,7 +105,7 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
             className={`flex-row items-center p-3 border rounded-xl ${config.placement === 'section' ? 'border-primary bg-primary/10' : 'border-border bg-surface'}`}
           >
             <View className="w-8 h-8 rounded-full bg-input-background items-center justify-center mr-3">
-              <FileText color={config.placement === 'section' ? 'var(--primary)' : 'var(--text-secondary)'} size={16} />
+              <FileText color={config.placement === 'section' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={16} />
             </View>
             <View>
               <Text className={`font-bold text-sm ${config.placement === 'section' ? 'text-primary' : 'text-text'}`}>
@@ -118,7 +119,7 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
             className={`flex-row items-center p-3 border rounded-xl ${config.placement === 'profile-description-side' ? 'border-primary bg-primary/10' : 'border-border bg-surface'}`}
           >
             <View className="w-8 h-8 rounded-full bg-input-background items-center justify-center mr-3">
-              <Sidebar color={config.placement === 'profile-description-side' ? 'var(--primary)' : 'var(--text-secondary)'} size={16} />
+              <Sidebar color={config.placement === 'profile-description-side' ? useThemeColor('--primary') : useThemeColor('--text-secondary')} size={16} />
             </View>
             <View>
               <Text className={`font-bold text-sm ${config.placement === 'profile-description-side' ? 'text-primary' : 'text-text'}`}>
@@ -134,22 +135,22 @@ export function SkillsLayoutModal({ visible, onClose, config, onUpdate }: Skills
           {config.displayStyle === 'grouped' && (
             <TouchableOpacity onPress={() => onUpdate({ ...config, showCategoryTitles: !config.showCategoryTitles })} className="flex-row items-center justify-between p-3 border border-border bg-surface rounded-xl">
               <Text className="text-text">{t('editor.skillsLayout.opt_showCategoryTitles', 'Show Categories')}</Text>
-              <Switch value={config.showCategoryTitles} onValueChange={(v) => onUpdate({ ...config, showCategoryTitles: v })} trackColor={{ false: 'var(--border)', true: 'var(--primary)' }} />
+              <Switch value={config.showCategoryTitles} onValueChange={(v) => onUpdate({ ...config, showCategoryTitles: v })} trackColor={{ false: useThemeColor('--border'), true: useThemeColor('--primary') }} />
             </TouchableOpacity>
           )}
           <TouchableOpacity onPress={() => onUpdate({ ...config, showNames: !config.showNames })} className="flex-row items-center justify-between p-3 border border-border bg-surface rounded-xl">
             <Text className="text-text">{t('editor.skillsLayout.opt_showNames', 'Show Names')}</Text>
-            <Switch value={config.showNames} onValueChange={(v) => onUpdate({ ...config, showNames: v })} trackColor={{ false: 'var(--border)', true: 'var(--primary)' }} />
+            <Switch value={config.showNames} onValueChange={(v) => onUpdate({ ...config, showNames: v })} trackColor={{ false: useThemeColor('--border'), true: useThemeColor('--primary') }} />
           </TouchableOpacity>
           {(config.displayStyle === 'icon-grid' || config.displayStyle === 'icons' || config.displayStyle === 'chips' || config.displayStyle === 'grouped') && (
             <TouchableOpacity onPress={() => onUpdate({ ...config, showIcons: !config.showIcons })} className="flex-row items-center justify-between p-3 border border-border bg-surface rounded-xl">
               <Text className="text-text">{t('editor.skillsLayout.opt_showIcons', 'Show Icons')}</Text>
-              <Switch value={config.showIcons} onValueChange={(v) => onUpdate({ ...config, showIcons: v })} trackColor={{ false: 'var(--border)', true: 'var(--primary)' }} />
+              <Switch value={config.showIcons} onValueChange={(v) => onUpdate({ ...config, showIcons: v })} trackColor={{ false: useThemeColor('--border'), true: useThemeColor('--primary') }} />
             </TouchableOpacity>
           )}
           <TouchableOpacity onPress={() => onUpdate({ ...config, compact: !config.compact })} className="flex-row items-center justify-between p-3 border border-border bg-surface rounded-xl">
             <Text className="text-text">{t('editor.skillsLayout.opt_compact', 'Compact Spacing')}</Text>
-            <Switch value={config.compact} onValueChange={(v) => onUpdate({ ...config, compact: v })} trackColor={{ false: 'var(--border)', true: 'var(--primary)' }} />
+            <Switch value={config.compact} onValueChange={(v) => onUpdate({ ...config, compact: v })} trackColor={{ false: useThemeColor('--border'), true: useThemeColor('--primary') }} />
           </TouchableOpacity>
         </View>
 

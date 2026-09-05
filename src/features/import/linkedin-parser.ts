@@ -10,7 +10,8 @@ export async function parseLinkedInExport(fileUri: string, fileType: string, fil
     if (fileType === 'application/zip' || fileUri.endsWith('.zip')) {
       if (!fileContent) throw new Error('File content required for zip parsing');
       const zip = new JSZip();
-      const zipData = await zip.loadAsync(fileContent);
+      const isBase64 = typeof fileContent === 'string';
+      const zipData = await zip.loadAsync(fileContent, { base64: isBase64 });
 
       for (const [filename, fileData] of Object.entries(zipData.files)) {
         if (filename.toLowerCase().includes('positions.csv')) {

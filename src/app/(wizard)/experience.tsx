@@ -16,6 +16,8 @@ import { useTranslation } from "react-i18next";
 import { Text, View, TouchableOpacity, LayoutChangeEvent } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming, Easing, LinearTransition, FadeInDown } from "react-native-reanimated";
 import { smoothLayout, slideInLeft, slideInRight, slideOutLeftAbsolute, slideOutRightAbsolute } from "@/utils/animations";
+import { useThemeColor } from '@/theme/colors';
+
 
 export default function ExperienceScreen() {
   const { t } = useTranslation();
@@ -144,7 +146,7 @@ export default function ExperienceScreen() {
           {/* Animated Indicator */}
           {expTabLayout.width > 0 && (
             <Animated.View 
-              style={[indicatorStyle, { position: 'absolute', height: '100%', left: 0, top: 4, bottom: 4, borderRadius: 6, backgroundColor: 'var(--surface)', borderWidth: 1, borderColor: 'var(--border)' }]} 
+              style={[indicatorStyle, { position: 'absolute', height: '100%', left: 0, top: 4, bottom: 4, borderRadius: 6, backgroundColor: useThemeColor('--surface'), borderWidth: 1, borderColor: useThemeColor('--border') }]} 
             />
           )}
           
@@ -172,7 +174,7 @@ export default function ExperienceScreen() {
         <View className="flex-row flex-wrap gap-4">
           <Button variant="default" onPress={() => setIsImportModalVisible(true)}>
             <View className="flex-row items-center">
-              <Download color="var(--primary-foreground)" size={18} className="mr-2" />
+              <Download color={useThemeColor('--primary-foreground')} size={18} className="mr-2" />
               <Text className="text-primary-foreground font-bold">
                 {t("experience.import_data")}
               </Text>
@@ -181,7 +183,7 @@ export default function ExperienceScreen() {
 
           <Button variant="outline" onPress={activeTab === 'experience' ? handleAddExperience : handleAddEducation}>
             <View className="flex-row items-center">
-              <Plus color="var(--text)" size={18} className="mr-2" />
+              <Plus color={useThemeColor('--text')} size={18} className="mr-2" />
               <Text className="text-text font-bold">
                 {activeTab === 'experience' ? t("experience.add_experience") : t("experience.add_education")}
               </Text>

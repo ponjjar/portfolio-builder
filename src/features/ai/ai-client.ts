@@ -1,11 +1,26 @@
 import { SummarizeProjectsRequest, SummarizeProjectsResponse, SuggestProfileRequest, SuggestProfileResponse, TranslateRequest, TranslateResponse, ParseResumeRequest, ParseResumeResponse } from './types';
 import { ExternalAiConfig } from '@/components/ai/AiExternalConfigModal';
 
-const API_BASE_URL = process.env.EXPO_PUBLIC_API_BASE_URL || '';
+import { Platform } from 'react-native';
+
+function getApiBaseUrl() {
+  let url = Platform.OS !== 'web' && process.env.EXPO_PUBLIC_API_MOBILE_URL 
+    ? process.env.EXPO_PUBLIC_API_MOBILE_URL 
+    : (process.env.EXPO_PUBLIC_API_BASE_URL || '');
+
+  // Remove trailing slash and /api suffix so routes map correctly to /api/ai/...
+  url = url.replace(/\/api\/?$/, '').replace(/\/$/, '');
+
+  // Android Emulator needs 10.0.2.2 to access host's localhost
+  if (Platform.OS === 'android' && url) {
+    url = url.replace('localhost', '10.0.2.2').replace('127.0.0.1', '10.0.2.2');
+  }
+  return url;
+}
 
 export class AiClient {
   static async summarizeProjects(request: SummarizeProjectsRequest): Promise<SummarizeProjectsResponse> {
-    const response = await fetch(`${API_BASE_URL}/api/ai/summarize-projects`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/ai/summarize-projects`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -23,7 +38,7 @@ export class AiClient {
   }
 
   static async suggestProfile(request: SuggestProfileRequest): Promise<SuggestProfileResponse> {
-    const response = await fetch(`${API_BASE_URL}/api/ai/suggest-profile`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/ai/suggest-profile`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +56,7 @@ export class AiClient {
   }
 
   static async translate(request: TranslateRequest): Promise<TranslateResponse> {
-    const response = await fetch(`${API_BASE_URL}/api/ai/translate`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/ai/translate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -101,7 +116,7 @@ export class AiClient {
   }
 
   static async parseResume(request: ParseResumeRequest): Promise<ParseResumeResponse> {
-    const response = await fetch(`${API_BASE_URL}/api/ai/parse-resume`, {
+    const response = await fetch(`${getApiBaseUrl()}/api/ai/parse-resume`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

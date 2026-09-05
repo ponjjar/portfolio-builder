@@ -1,3 +1,4 @@
+import { handleCors } from './utils/cors';
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { verifyTurnstileToken } from './utils/turnstile';
 const pdf = require('pdf-parse');
@@ -12,6 +13,8 @@ export const config = {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  if (handleCors(req, res)) return;
+
   // CORS setup
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Origin', '*');

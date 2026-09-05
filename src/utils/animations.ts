@@ -17,17 +17,17 @@ export const EASINGS = {
 export const smoothLayout = LinearTransition.duration(ANIMATION_DURATIONS.expand).easing(EASINGS.smoothOut);
 
 // Card Entrance (New item / import)
-export const cardEntrance = FadeInDown.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut).withInitialValues({ transform: [{ translateY: 6 }, { scale: 0.97 }] });
+export const cardEntrance = FadeInDown.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut);
 
 // Card Exit (Delete)
 export const cardExit = FadeOut.duration(ANIMATION_DURATIONS.fast);
 
 // Tab Transitions
-export const slideOutLeft = SlideOutLeft.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut).withInitialValues({ transform: [{ translateX: 0 }] });
-export const slideInRight = SlideInRight.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut).withInitialValues({ transform: [{ translateX: 30 }] });
+export const slideOutLeft = SlideOutLeft.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut);
+export const slideInRight = SlideInRight.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut);
 
-export const slideOutRight = SlideOutRight.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut).withInitialValues({ transform: [{ translateX: 0 }] });
-export const slideInLeft = SlideInLeft.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut).withInitialValues({ transform: [{ translateX: -30 }] });
+export const slideOutRight = SlideOutRight.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut);
+export const slideInLeft = SlideInLeft.duration(ANIMATION_DURATIONS.normal).easing(EASINGS.smoothOut);
 
 // Absolute slide outs for layout preservation
 import { withTiming } from 'react-native-reanimated';
@@ -41,7 +41,7 @@ export const slideOutLeftAbsolute = () => {
     },
     initialValues: {
       position: 'absolute' as const,
-      width: '100%',
+      width: '100%' as any,
       top: 0,
       left: 0,
       transform: [{ translateX: 0 }],
@@ -59,7 +59,7 @@ export const slideOutRightAbsolute = () => {
     },
     initialValues: {
       position: 'absolute' as const,
-      width: '100%',
+      width: '100%' as any,
       top: 0,
       left: 0,
       transform: [{ translateX: 0 }],

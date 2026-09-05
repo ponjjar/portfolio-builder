@@ -3,6 +3,8 @@ import { X } from 'lucide-react-native';
 import React from 'react';
 import { Platform, Modal as RNModal, ScrollView, Text, TouchableOpacity, useWindowDimensions, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, FadeOutLeft, ZoomInRotate } from 'react-native-reanimated';
+import { useThemeColor } from '@/theme/colors';
+
 
 export interface ModalProps {
     visible: boolean;
@@ -107,7 +109,7 @@ export function TransparentModal({
                             <Text className="text-text font-bold text-lg">{title}</Text>
                             {!hideCloseButton && onClose && (
                                 <TouchableOpacity onPress={onClose} className="p-2">
-                                    <X color="var(--text)" size={20} />
+                                    <X color={useThemeColor('--text')} size={20} />
                                 </TouchableOpacity>
                             )}
                         </View>

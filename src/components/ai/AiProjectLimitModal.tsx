@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { CheckSquare, Square } from 'lucide-react-native';
 import { useTranslation } from 'react-i18next';
 import { usePortfolioStore } from '@/store';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface AiProjectLimitModalProps {
   selectedProjectIds: string[];
@@ -60,9 +62,9 @@ export function AiProjectLimitModal({ selectedProjectIds, onToggleSelection, onC
             >
               <View className="mt-1 mr-3">
                 {isSelected ? (
-                  <CheckSquare color="var(--primary)" size={20} />
+                  <CheckSquare color={useThemeColor('--primary')} size={20} />
                 ) : (
-                  <Square color="var(--text-secondary)" size={20} />
+                  <Square color={useThemeColor('--text-secondary')} size={20} />
                 )}
               </View>
               <View className="flex-1">

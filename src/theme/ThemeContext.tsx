@@ -24,6 +24,8 @@ const ThemeContext = createContext<ThemeContextType>({
   isTransitioning: false,
 });
 
+export let currentActiveTheme: ThemeId = 'dark';
+
 export const useTheme = () => useContext(ThemeContext);
 
 const THEME_STORAGE_KEY = 'portfolio-builder:theme:v1';
@@ -43,6 +45,8 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [nextTheme, setNextTheme] = useState<ThemeId | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isReady, setIsReady] = useState(false);
+
+  currentActiveTheme = theme;
 
   // Transition state for fallback / mobile
   const [origin, setOrigin] = useState({ x: 0, y: 0 });
@@ -191,16 +195,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       <View className={`flex-1 theme-${theme}`}>
         <AmbientBackground theme={theme} />
 
-        <View className="flex-1 z-10" style={{ elevation: 1, zIndex: 10 }}>
-          {children}
-        </View>
-
-        {/* Top-layer GPU overlay for circular reveal animation on native/fallback */}
+        {/* Background-layer GPU overlay for circular reveal animation on native/fallback */}
         {nextTheme && (
           <View
             style={[
               StyleSheet.absoluteFill,
-              { zIndex: 99999, elevation: 99999, pointerEvents: 'none' },
+              { zIndex: 5, elevation: 5, pointerEvents: 'none' },
             ]}
           >
             <Animated.View
@@ -210,13 +210,17 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
                   left: origin.x,
                   top: origin.y,
                   backgroundColor: getThemeBackground(nextTheme),
-                  opacity: 0.96,
+                  opacity: 1,
                 },
                 animatedStyle,
               ]}
             />
           </View>
         )}
+
+        <View className="flex-1 z-10" style={{ elevation: 10, zIndex: 10 }}>
+          {children}
+        </View>
       </View>
     </ThemeContext.Provider>
   );

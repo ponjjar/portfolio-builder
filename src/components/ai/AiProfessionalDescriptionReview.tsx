@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { usePortfolioStore } from '@/store';
 import { Check, X, Bot } from 'lucide-react-native';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface AiProfessionalDescriptionReviewProps {
   locale: string;
@@ -32,7 +34,7 @@ export function AiProfessionalDescriptionReview({ locale }: AiProfessionalDescri
             {t('ai.profile_suggestion', 'Sugestão de Perfil')}
           </Text>
           <View className="bg-background border border-border px-2 py-1 rounded flex-row items-center ml-2">
-            <Bot color="var(--text-secondary)" size={12} className="mr-1" />
+            <Bot color={useThemeColor('--text-secondary')} size={12} className="mr-1" />
             <Text className="text-[10px] font-bold text-text-secondary uppercase">
               AI
             </Text>

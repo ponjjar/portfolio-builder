@@ -12,6 +12,8 @@ import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, Image, Text, TouchableOpacity, View } from 'react-native';
 import { ProjectImageSelectionModal } from '../modals/ProjectImageSelectionModal';
 import { useTurnstile } from '@/components/ui/TurnstileProvider';
+import { useThemeColor } from '@/theme/colors';
+
 
 interface GitHubImportModalProps {
   visible: boolean;
@@ -186,7 +188,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
           {step === 'input' && (
             <View className="flex-1 py-6 justify-center">
               <View className="mb-6 items-center">
-                <Code2 color="var(--text)" size={48} className="mb-4" />
+                <Code2 color={useThemeColor('--text')} size={48} className="mb-4" />
                 <Text className="text-text font-bold text-xl mb-2 text-center">{t('github.confirm_user')}</Text>
               </View>
 
@@ -198,7 +200,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
                 onSubmitEditing={handleSearch}
                 autoCapitalize="none"
                 autoCorrect={false}
-                leadingIcon={<Code2 color="var(--text-secondary)" size={16} />}
+                leadingIcon={<Code2 color={useThemeColor('--text-secondary')} size={16} />}
               />
 
               {error && (
@@ -216,7 +218,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
 
           {step === 'loading' && (
             <View className="flex-1 p-6 items-center justify-center">
-              <ActivityIndicator size="large" color="var(--text)" className="mb-4" />
+              <ActivityIndicator size="large" color={useThemeColor('--text')} className="mb-4" />
               <Text className="text-text text-lg font-bold">{t('github.searching')}</Text>
             </View>
           )}
@@ -230,7 +232,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
                   onChangeText={setSearchQuery}
                   autoCapitalize="none"
                   autoCorrect={false}
-                  leadingIcon={<Search color="var(--text-secondary)" size={16} />}
+                  leadingIcon={<Search color={useThemeColor('--text-secondary')} size={16} />}
                 />
 
                 <View className="flex-row gap-2 mt-4">
@@ -304,7 +306,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
                         {/* Thumbnail */}
                         <View className="w-12 h-12 rounded bg-input-background overflow-hidden mr-3 items-center justify-center border border-border/50">
                           {imgState?.status === 'loading' ? (
-                            <ActivityIndicator size="small" color="var(--text-secondary)" />
+                            <ActivityIndicator size="small" color={useThemeColor('--text-secondary')} />
                           ) : currentImage ? (
                             <Image 
                               source={{ uri: currentImage }} 
@@ -312,7 +314,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
                               resizeMode="cover" 
                             />
                           ) : (
-                            <ImageIcon color="var(--text-muted)" size={16} />
+                            <ImageIcon color={useThemeColor('--text-muted')} size={16} />
                           )}
                         </View>
 
@@ -351,7 +353,7 @@ export function GitHubImportModal({ visible, onClose, onImport }: GitHubImportMo
                             onPress={() => setEditingRepoId(repo.id)}
                             className="p-2 ml-2 bg-surface-elevated rounded-full"
                           >
-                            <Edit2 color="var(--text-secondary)" size={16} />
+                            <Edit2 color={useThemeColor('--text-secondary')} size={16} />
                           </TouchableOpacity>
                         )}
                       </View>

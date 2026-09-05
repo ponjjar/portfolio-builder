@@ -24,6 +24,21 @@ interface FetchOptions extends RequestInit {
   turnstileToken?: string;
 }
 
+import { Platform } from 'react-native';
+
+function getApiBaseUrl() {
+  let url = Platform.OS !== 'web' && process.env.EXPO_PUBLIC_API_MOBILE_URL 
+    ? process.env.EXPO_PUBLIC_API_MOBILE_URL 
+    : (process.env.EXPO_PUBLIC_API_BASE_URL || '');
+
+  url = url.replace(/\/api\/?$/, '').replace(/\/$/, '');
+
+  if (Platform.OS === 'android' && url) {
+    url = url.replace('localhost', '10.0.2.2').replace('127.0.0.1', '10.0.2.2');
+  }
+  return url;
+}
+
 export async function fetchFromGitHub<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
   const isDevelopment = process.env.NODE_ENV === 'development';
   
@@ -38,9 +53,9 @@ export async function fetchFromGitHub<T>(endpoint: string, options: FetchOptions
     }
   }
 
-  const url = isDevelopment 
-    ? `https://api.github.com${path}`
-    : `/api/github?endpoint=${encodeURIComponent(path)}`;
+  // Use the proxy for both development and production now, since we support proper local/remote routing
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}/api/github?endpoint=${encodeURIComponent(path)}`;
   
   const headers = new Headers(options.headers || {});
   if (!headers.has('Accept')) {
